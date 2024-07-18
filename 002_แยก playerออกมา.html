@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lua File Structure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lua File Structure</h1>
+
+    <h2>player.lua</h2>
+    <h3>1. ส่วนตัวแปร</h3>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('variable-code')">Copy</button>
+        <pre id="variable-code">
+local player = {
+    x = 100,
+    y = 100,
+    speed = 100,
+    image = nil
+}
+        </pre>
+    </div>
+
+    <h3>2. ส่วนฟังก์ชัน</h3>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('function-code')">Copy</button>
+        <pre id="function-code">
+function player.load()
+    player.image = love.graphics.newImage("assets/players/megaman.png")
+end
+
+function player.update(dt)
+    if love.keyboard.isDown("up") then
+        player.y = player.y - player.speed * dt
+    end
+    if love.keyboard.isDown("down") then
+        player.y = player.y + player.speed * dt
+    end
+    if love.keyboard.isDown("left") then
+        player.x = player.x - player.speed * dt
+    end
+    if love.keyboard.isDown("right") then
+        player.x = player.x + player.speed * dt
+    end
+end
+
+function player.draw()
+    love.graphics.draw(player.image, player.x, player.y)
+end
+        </pre>
+    </div>
+
+    <h3>3. ส่วนประมวลผล</h3>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('process-code')">Copy</button>
+        <pre id="process-code">
+return player
+        </pre>
+    </div>
+
+    <h2>main.lua</h2>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('main-code')">Copy</button>
+        <pre id="main-code">
+local player = require("player")
+
+function love.load()
+    player.load()
+end
+
+function love.update(dt)
+    player.update(dt)
+end
+
+function love.draw()
+    player.draw()
+end
+        </pre>
+    </div>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const range = document.createRange();
+            range.selectNode(codeElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("Code copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

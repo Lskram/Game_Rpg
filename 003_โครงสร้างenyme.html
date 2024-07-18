@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lua Enemy File Structure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lua Enemy File Structure</h1>
+
+    <h2>enemy.lua</h2>
+    <h3>1. ส่วนตัวแปร</h3>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('variable-code')">Copy</button>
+        <pre id="variable-code">
+local function newEnemy(x, y)
+    local enemy = {
+        x = x,
+        y = y,
+        speed = 50,
+        image = love.graphics.newImage("assets/enemy.png")
+    }
+    return enemy
+end
+
+return newEnemy
+        </pre>
+    </div>
+
+    <h3>2. ส่วนฟังก์ชัน</h3>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('function-code')">Copy</button>
+        <pre id="function-code">
+function enemy.update(dt)
+    self.y = self.y + self.speed * dt
+end
+
+function enemy.draw()
+    love.graphics.draw(self.image, self.x, self.y)
+end
+        </pre>
+    </div>
+
+    <h2>main.lua</h2>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('main-code')">Copy</button>
+        <pre id="main-code">
+local newEnemy = require("enemy")
+
+local enemies = {}
+
+function love.load()
+    table.insert(enemies, newEnemy(100, 100))
+    table.insert(enemies, newEnemy(200, 150))
+    table.insert(enemies, newEnemy(300, 200))
+end
+
+function love.update(dt)
+    for _, enemy in ipairs(enemies) do
+        enemy.update(dt)
+    end
+end
+
+function love.draw()
+    for _, enemy in ipairs(enemies) do
+        enemy.draw()
+    end
+end
+        </pre>
+    </div>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const range = document.createRange();
+            range.selectNode(codeElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("Code copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

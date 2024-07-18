@@ -1,0 +1,25 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "#map": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/game3/Maps",
+    "last.imagePath": "C:/game3/assests/backgrounds",
+    "map.height": 60,
+    "map.lastUsedExportFilter": "Lua files (*.lua)",
+    "map.width": 60,
+    "openFiles": [
+    ],
+    "project": "Maps.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.embedInMap": true
+}

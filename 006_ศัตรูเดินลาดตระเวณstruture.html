@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love2D Enemy Patrol</title>
+    <style>
+        pre {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .copy-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Love2D Enemy Patrol Code</h2>
+<pre id="code">
+local function newEnemy(x, y, step)
+    local enemy = {
+        x = x,
+        y = y,
+        speed = 50,
+        step = step,
+        direction = 1, -- 1 for down, -1 for up
+        image = love.graphics.newImage("assets/enemy.png"),
+        
+        update = function(self, dt)
+            self.y = self.y + self.speed * dt * self.direction
+            -- Change direction when reaching the step
+            if self.y >= self.step + y then
+                self.direction = -1
+            elseif self.y <= y then
+                self.direction = 1
+            end
+        end,
+        
+        draw = function(self)
+            love.graphics.draw(self.image, self.x, self.y)
+        end
+    }
+    return enemy
+end
+
+return newEnemy
+</pre>
+<button class="copy-button" onclick="copyCode()">Copy Code</button>
+
+<script>
+    function copyCode() {
+        const codeElement = document.getElementById('code');
+        const range = document.createRange();
+        range.selectNode(codeElement);
+        window.getSelection().removeAllRanges(); // clear current selection
+        window.getSelection().addRange(range); // to select text
+        try {
+            document.execCommand('copy');
+            alert('Code copied to clipboard');
+        } catch (err) {
+            alert('Failed to copy code');
+        }
+        window.getSelection().removeAllRanges(); // to deselect
+    }
+</script>
+
+</body>
+</html>

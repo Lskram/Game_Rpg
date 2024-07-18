@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lua Enemy Class File Structure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lua Enemy Class File Structure</h1>
+
+    <h2>Class.lua</h2>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('class-code')">Copy</button>
+        <pre id="class-code">
+local Class = {}
+Class.__index = Class
+
+function Class:new()
+    local instance = setmetatable({}, self)
+    return instance
+end
+
+return Class
+        </pre>
+    </div>
+
+    <h2>Enemy.lua</h2>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('enemy-code')">Copy</button>
+        <pre id="enemy-code">
+local Class = require("Class")
+
+local Enemy = Class:new()
+
+function Enemy:new(x, y)
+    local instance = Class.new(self)
+    instance.x = x
+    instance.y = y
+    instance.speed = 50
+    instance.image = love.graphics.newImage("assets/enemy.png")
+    return instance
+end
+
+function Enemy:update(dt)
+    self.y = self.y + self.speed * dt
+end
+
+function Enemy:draw()
+    love.graphics.draw(self.image, self.x, self.y)
+end
+
+return Enemy
+        </pre>
+    </div>
+
+    <h2>main.lua</h2>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode('main-code')">Copy</button>
+        <pre id="main-code">
+local Enemy = require("Enemy")
+
+local enemies = {}
+
+function love.load()
+    table.insert(enemies, Enemy:new(100, 100))
+    table.insert(enemies, Enemy:new(200, 150))
+    table.insert(enemies, Enemy:new(300, 200))
+end
+
+function love.update(dt)
+    for _, enemy in ipairs(enemies) do
+        enemy:update(dt)
+    end
+end
+
+function love.draw()
+    for _, enemy in ipairs(enemies) do
+        enemy:draw()
+    end
+end
+        </pre>
+    </div>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const range = document.createRange();
+            range.selectNode(codeElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("Code copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
